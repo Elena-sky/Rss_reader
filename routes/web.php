@@ -12,5 +12,23 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
+
+Route::get('/about', function () {
+    return view('about');
+});
+
+Route::get('/profile', 'UserController@profile');
+
+Route::get('/changePassword', 'UserController@showChangePasswordForm');
+
+Route::post('/changePassword', 'UserController@changePassword')->name('changePassword');
+
+Route::get('/edit',   'UserController@edit');
+
+Route::patch('/update', 'UserController@update')->name('update');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
