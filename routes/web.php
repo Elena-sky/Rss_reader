@@ -12,7 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('index');
+    $entries = [];
+    $xml = simplexml_load_file('https://xkcd.com/rss.xml');
+    $entries = array_merge($entries, $xml->xpath("//item"));
+    usort($entries, function ($feed1, $feed2) {
+        return strtotime($feed2->pubDate) - strtotime($feed1->pubDate);
+    });
+    return view('showfeed', ['entries' => $entries]);
 });
 
 Route::get('/about', function () {
@@ -40,8 +46,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/', 'AdminController@index')->name('admin.dashboard');
 
     Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
-    Route::resource('/user','AdminController',['as'=>'admin']);
-    Route::resource('/admin','Auth\AdminCreateController',['as'=>'admin']);
+    Route::resource('/user', 'AdminController', ['as' => 'admin']);
+    Route::resource('/admin', 'Auth\AdminCreateController', ['as' => 'admin']);
 
 
     // Password reset routes
@@ -50,4 +56,8 @@ Route::prefix('admin')->group(function () {
     Route::post('/password/reset', 'Auth\AdminResetPasswordController@reset');
     Route::get('/password/reset/{token}', 'Auth\AdminResetPasswordController@showResetForm')->name('admin.password.reset');
 });
+
+Route::resource('/rss', 'RssController');
+
+Route::post('/showfeed', 'UserController@showFeed')->name('showfeed');
 

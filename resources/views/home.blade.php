@@ -12,8 +12,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    <h2>You are logged in!</h2>
+                    <h3><a href="{{route('rss.create')}}" >
+                            <i class="fa fa-plus-square-o"></i> Add Rss
+                        </a>  feed and enjoy!!!</h3>
 
-                    You are logged in!
                 </div>
             </div>
         </div>

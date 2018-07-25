@@ -4,10 +4,9 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
-                <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur
-                    voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam
-                    ducimus
-                    consectetur?
+                <p> <h2>The best RSS Reader</h2>
+                The easiest way to follow news from your favorite websites and blogs.
+
                 </p>
                 <hr>
 

@@ -59,16 +59,31 @@ class UserController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.Auth::user()->id,
+            'email' => 'required|email|unique:users,email,' . Auth::user()->id,
         ]);
 
         $user = Auth::user();
         $user->update($validatedData);
 
-        if($request->file('image')!=null){
-        $user->img_path = $request->file('image')->store('avatar', 'public');}
+        if ($request->file('image') != null) {
+            $user->img_path = $request->file('image')->store('avatar', 'public');
+        }
         $user->save();
 
         return redirect('/profile');
+    }
+
+    public function showFeed(Request $request)
+    {
+        $url = trim($request['url']);
+        $entries = [];
+        $xml = simplexml_load_file($url);
+        $entries = array_merge($entries, $xml->xpath("//item"));
+
+        //Sort feed entries by pubDate
+        usort($entries, function ($feed1, $feed2) {
+            return strtotime($feed2->pubDate) - strtotime($feed1->pubDate);
+        });
+        return view('showfeed', ['entries' => $entries]);
     }
 }

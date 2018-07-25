@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,7 +46,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url('/')}}">Home</a>
+                        <a class="nav-link" href="{{url('/home')}}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{url('/about')}}">About</a>
@@ -62,10 +63,28 @@
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                Select a RSS <span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                @foreach(Auth::user()->rss()->get() as $rss)
+                                    <form action="{{route('showfeed')}}" method="post" >
+                                        @csrf
+                                        <input type="text"  name="url" value="{{$rss->rss_path}}" hidden>
+                                        <button type="submit" class="dropdown-item">{{$rss->name}}</button>
+                                    </form>
+                                @endforeach
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }} <img src="{{asset('/storage/'.Auth::user()->img_path)}}"
+                                                              style="width:30px; height:30px; float:left; border-radius:50%; margin-right:25px;"><span class="caret"></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{route('rss.index') }}"><i
+                                            class="fa fa-btn fa-bars"></i> All RSS</a>
                                 <a class="dropdown-item" href="{{url('/profile') }}"><i class="fa fa-btn fa-user"></i>
                                     Profile</a>
                                 <a class="dropdown-item" href="{{ route('user.logout') }}">
@@ -88,6 +107,7 @@
                     <div class="site-heading">
                         <h1>{{ $app_name }}</h1>
                         <span class="subheading">One of the most popular "{{ $app_name }}"</span>
+
                     </div>
                 </div>
             </div>

@@ -26,4 +26,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function rss(){
+        return $this->hasMany('App\Rss','user_id','id');
+    }
+
 }
