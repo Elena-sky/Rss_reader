@@ -25,8 +25,8 @@
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/admin') }}">
-                {{ config('app.name', 'Laravel') }}
+            <a class="navbar-brand" href="{{route('admin') }}">
+                {{ config('app.name', 'Laravel') }} ADMIN PANEL
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -58,8 +58,11 @@
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
-
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                                        <i class="fa fa-btn fa-user"></i>
+                                        Users
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('admin.logout') }}">
                                         <i class="fa fa-btn fa-sign-out"></i>
                                         {{ __('Logout') }}
@@ -76,6 +79,14 @@
     <main class="py-4">
         @yield('content')
     </main>
+    <footer class="modal-footer " style="position:absolute; bottom: 0;">
+        <div class="container">
+            <div class="row ">
+                <div class="col-md-12">
+                    <p class="copyright text-muted ">Copyright &copy; {{ $app_name }} {{ date('Y')}}</p></div>
+            </div>
+        </div>
+    </footer>
 </div>
 </body>
 </html>

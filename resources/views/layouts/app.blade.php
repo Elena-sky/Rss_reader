@@ -116,9 +116,9 @@
     @yield('content')
 </div>
 <!-- Footer -->
-<footer>
+<footer >
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <ul class="list-inline text-center">
                     <li class="list-inline-item">

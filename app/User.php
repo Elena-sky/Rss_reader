@@ -2,6 +2,7 @@
 
 namespace App;
 
+
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -15,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','img_path',
+        'name', 'email', 'password', 'img_path',
     ];
 
     /**
@@ -27,8 +28,14 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function rss(){
-        return $this->hasMany('App\Rss','user_id','id');
+    public function rss()
+    {
+        return $this->hasMany('App\Rss', 'user_id', 'id');
+    }
+
+    public function isOnline()
+    {
+        return \Illuminate\Support\Facades\Cache::has('user-is-online-' . $this->id);
     }
 
 }

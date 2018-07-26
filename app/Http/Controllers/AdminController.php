@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Rss;
 use Illuminate\Http\Request;
 use App\User;
 
 
 class AdminController extends Controller
 {
+    protected $redirectTo = '/admin';
+
     /**
      * Create a new controller instance.
      *
@@ -26,7 +29,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin', ['users' => User::paginate(10)]);
+        return view('users', ['users' => User::paginate(10), 'count' => User::get()->count()]);
     }
 
     /**
@@ -66,9 +69,19 @@ class AdminController extends Controller
      * @param  \App\User $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show()
     {
-        //
+        $usersOnline = [];
+        foreach (User::get() as $user) {
+            if ($user->isOnline())
+                $usersOnline[] = $user;
+        }
+        return view('admin', [
+            'users'             => $usersOnline,
+            'count_user'        => User::get()->count(),
+            'count_user_online' => count($usersOnline),
+            'count_rss_feeds'   => Rss::get()->count()
+            ]);
     }
 
     /**
