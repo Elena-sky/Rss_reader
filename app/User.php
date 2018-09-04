@@ -35,7 +35,7 @@ class User extends Authenticatable
 
     public function isOnline()
     {
-        return \Illuminate\Support\Facades\Cache::has('user-is-online-' . $this->id);
+        return \Illuminate\Support\FacaCache::has('user-is-online-' . $this->id);
     }
 
 }

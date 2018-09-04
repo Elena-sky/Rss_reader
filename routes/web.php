@@ -43,10 +43,11 @@ Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logou
 Route::prefix('admin')->group(function () {
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+    Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
+
+
     Route::get('/users', 'AdminController@index')->name('admin.dashboard');
     Route::get('/', 'AdminController@show')->name('admin');
-
-    Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
     Route::resource('/user', 'AdminController', ['as' => 'admin']);
     Route::resource('/admin', 'Auth\AdminCreateController', ['as' => 'admin']);
 
